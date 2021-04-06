@@ -10,7 +10,6 @@ app.use(cors());
 var AuthController = require('./auth/AuthController');
 app.use('/api/auth', AuthController);
 
-
 if (process.env.NODE_ENV === "production"){
     app.use(express.static(path.join(__dirname,"/frontend/build")))
 
@@ -22,6 +21,7 @@ if (process.env.NODE_ENV === "production"){
         res.send("api is running")
     })
 }
+
 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`)
