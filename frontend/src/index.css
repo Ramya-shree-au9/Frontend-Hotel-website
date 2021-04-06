@@ -1,0 +1,17 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: rgba(137, 43, 226, 0.151);
+  background-image: url('https://media.istockphoto.com/vectors/abstract-gray-background-vector-id903533082?k=6&m=903533082&s=612x612&w=0&h=Mo_bDe94TX5ZlL00cquZrdaveLFqdXiz3vjkoOoS5ps=');
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+@media screen and (max-width: 300px) {
+  .cancelbtn, .signupbtn {
+     width: 100%;
+  }
+}

@@ -1,0 +1,27 @@
+
+img{
+    width:90%;
+    height: 50%;
+}
+.imgdiv{
+    padding: 1%;
+}
+
+#head{
+    color: chocolate;
+    padding:0 2px 2px 2px
+}
+#notavail{
+    color: rgb(100, 0, 87);
+}
+.costfilterdata{
+    margin-top: 50px;
+}
+.detailsofhotel{
+    border: 2px solid white;
+    margin:1% 
+}
+.sidehead{
+    color: rgba(128, 128, 128, 0.925);
+    margin-right: 5px;
+}
