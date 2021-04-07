@@ -6,7 +6,7 @@ const port = 5000;
 const path = require('path')
 
 app.use(cors());
-
+app.use(express.json())
 var AuthController = require('./auth/AuthController');
 app.use('/api/auth', AuthController);
 
