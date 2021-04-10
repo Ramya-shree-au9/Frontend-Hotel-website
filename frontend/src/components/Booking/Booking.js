@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import {Link} from 'react-router-dom'
+import img from './bookingimg.svg'
 
-
-const url ='http://localhost:5000/api/auth/hotelbooking'
+const url ='/api/auth/hotelbooking'
 class Booking extends Component {
     constructor(){
         super()
@@ -43,7 +43,7 @@ class Booking extends Component {
             }else{
                 this.setState({error:"Please fill All details"})
             }
-        
+       
     }
 
     changeHanderdate=(e)=>{
@@ -53,15 +53,17 @@ class Booking extends Component {
   render() {
       console.log(this.state.date)
     return (
-      <div>
+      
      
-        <div className="container">
+        <div className="container bookingsection">
         
-         <div className="panel panel-primary">
-            <div className="panel-heading">
+         <div className="panel panelmain">
+            <div className="panel-heading panelcolor">
             <h2>Booking for hotel {this.state.hotelName}</h2>
             </div>
-            <div className="panel-body">
+            <div className="panel-body row">
+                <div className='col-md-6 imgsection'><img src={img} alt=''></img></div>
+                <div className='col-md-6'>
                 <div className="form-group">
                     <label for="Hname">Hotel Name:</label>
                     <input type="text" className="form-control" id='Hname' value={this.state.hotelName} readOnly/>
@@ -86,10 +88,9 @@ class Booking extends Component {
                
                 <Link to='/'  className="btn btn-danger">Cancel</Link> &nbsp; 
                 <button className="btn btn-success" onClick={this.handleSubmit}>Submit</button>
-               
+                </div>
             </div>
             </div>
-      </div>
       </div>
     )
   }

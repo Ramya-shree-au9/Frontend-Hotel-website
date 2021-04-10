@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 import Displaybooking from './Displaybooking'
+import './booking.css'
 
-const url ='http://localhost:5000/api/auth/bookings'
+const url ='/api/auth/bookings'
 const hotelname ='https://developerfunnel.herokuapp.com/hotels?city='
 class Viewbooking extends Component {
     constructor(){
@@ -54,18 +55,21 @@ class Viewbooking extends Component {
     // }
   render() {
     console.log('hotelname',this.state.filtered)
-    if (!sessionStorage.getItem('token')){
+    if (!sessionStorage.getItem('token') ){
       this.props.history.push('/login')
     }
     return (
-      <div>
+      <div style={{marginTop:'10px'}}>
       
       <div className='container'>
-      <select onClick={this.HotelName} style={{padding:'8px'}}>
+        <p className='filterdata'>Filter By:</p>
+        <div className='filterdata'>
+      <select onClick={this.HotelName} style={{padding:'5px'}}>
           <option>------SELECT HOTEL------</option>
           {this.renderHotelname(this.state.Hname)}
         </select> &nbsp;
-        <input  style={{padding:'5px',float:'right'}} type='date' onChange={this.selectedDate} value={this.state.date}></input>
+        <input  style={{padding:'3px'}} type='date' onChange={this.selectedDate} value={this.state.date}></input>
+        </div>
         <div>
           <center style={{color:'blue'}}><h1>BOOKINGS</h1></center>
         <Displaybooking bookinglist={this.state.filtered}/>

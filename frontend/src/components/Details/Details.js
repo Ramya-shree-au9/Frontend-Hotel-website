@@ -27,7 +27,7 @@ export class Details extends Component {
     sessionStorage.setItem("hotelname",this.state.hotel.name)
     const {hotel}=this.state
     return (
-      <div>
+      <div style={{marginTop:'5px'}}>
       
       <div className="container">
          <div className="panel panel-primary">

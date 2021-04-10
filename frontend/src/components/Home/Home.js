@@ -5,8 +5,7 @@ import QuickSearch from './QuickSearch'
 
 const Home = ()=>{
     return(
-        <div>
-            
+        <div> 
             <Search/>
             <QuickSearch/>
         </div>

@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import {Link} from 'react-router-dom'
 import './signuplogin.css'
 
-const url = 'http://localhost:5000/api/auth/register'
+const url = '/api/auth/register'
 class SignUp extends Component {
     constructor(){
         super()

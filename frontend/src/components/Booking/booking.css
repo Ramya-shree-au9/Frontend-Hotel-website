@@ -1,0 +1,18 @@
+.filterdata{
+    display: inline;
+    margin: 2%;
+}
+
+.bookingsection{
+    margin-top: 5px;
+}
+.imgsection{
+    background-color: rgba(0, 0, 255, 0.596);
+    padding: 4%;
+}
+.panelcolor{
+    background-color: rgba(128, 255, 0, 0.548);
+}
+.panelmain{
+    border: 2px solid black;
+}

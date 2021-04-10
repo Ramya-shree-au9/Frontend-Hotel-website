@@ -28,14 +28,17 @@ router.post('/register',(req,res) => {
 
 //Login User
 router.post('/login',(req,res) => {
+    console.log(req.body)
     User.findOne({email:req.body.email},(err,user) =>{
-        if(err) return res.status(500).send('There is a problem in login');
-        if(!user) return res.status(403).send('No User Found register first')
+        if(err) return res.status(400).send({message:'There is a problem in login'});
+        if(!user) { 
+            console.log('login')
+        res.status(200).send({message:'No User Found register first'})}
         else{
             const passIsValid = bcrypt.compareSync(req.body.password,user.password)
-            if(!passIsValid) return res.status(401).send('Invalid Password')
+            if(!passIsValid) return res.status(200).send({message:'Invalid Password'})
             var token = jwt.sign({id:user._id},config.secert,{expiresIn:86400});
-            res.send({auth:true,token:token,data:user})
+            res.send({auth:true,token:token,data:user,message:''})
         }
     })
 })
@@ -43,13 +46,16 @@ router.post('/login',(req,res) => {
 
 //Get User info
 router.get('/userInfo',(req,res) => {
+    
     var token = req.headers['x-access-token']
-    if(!token) res.send({auth:false,token:'No Token Provided'})
+    if(!token) res.send({auth:false})
+   
     jwt.verify(token,config.secert,(err,data) => {
-        if(err) return res.status(500).send({auth:false,token:'Invalid Token Provided'});
+       
+        if(err) return res.status(200).send({auth:false});
         User.findById(data.id,{password:0},(err,user) => {
-            if(err) return res.status(500).send({auth:false,token:'err fetching user'});
-            res.send(user)
+            if(err) return res.status(200).send({auth:false}); 
+            res.status(200).send({auth:true,data:user})
         })
     })
 })
@@ -81,12 +87,15 @@ router.patch('/bookingstatus/:id',(req,res) => {
     console.log(req.body)
     console.log(req.params.id)
 
-    
-    hotelbooking.findOneAndUpdate({_id:req.params.id},{$set:{status:req.body.status}},(err,data)=>{
+    if(req.body.status === 'Accepted'){
+    hotelbooking.findOneAndUpdate({_id:req.params.id},{$set:{status:req.body.status,accept:'Accepted',reject:'Reject'}},(err,data)=>{
         res.status(200).send(data)
-    })
-                
-        
+    })}
+    else{
+        hotelbooking.findOneAndUpdate({_id:req.params.id},{$set:{status:req.body.status,reject:'Rejected',accept:'Accept'}},(err,data)=>{
+            res.status(200).send(data)
+        })
+    }    
     })
 
 module.exports = router;

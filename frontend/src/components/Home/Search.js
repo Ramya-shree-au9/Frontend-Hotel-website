@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import './Search.css'
-import { withRouter} from 'react-router-dom'
+import {withRouter} from 'react-router-dom'
 
 const url = 'https://developerfunnel.herokuapp.com/location'
 const hotelurl ='https://developerfunnel.herokuapp.com/hotels?city=';
@@ -54,7 +54,8 @@ class Search extends Component {
 
   render() {
     return (
-    <div className="imageContainer">
+        <div className='mainsection'>
+        <div className="imageContainer">
                 <div id="logo">
                     D!
                 </div>
@@ -71,6 +72,7 @@ class Search extends Component {
                        {this.renderHotel(this.state.hotel)}
                     </select>
                 </div>
+      </div>
       </div>
     )
     }

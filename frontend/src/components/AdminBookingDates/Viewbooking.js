@@ -1,23 +1,37 @@
-import React, { Component } from 'react'
+import React, {useEffect,useState } from 'react'
 import axios from 'axios'
 import Displaybooking from './DisplayAdmin'
+import '../Booking/booking.css'
+import {hoteldata,statusChange} from '../../action'
+import {connect} from 'react-redux'
 
-const url = 'http://localhost:5000/api/auth/bookings'
-const userinfo='http://localhost:5000/api/auth/userinfo'
 const hotelname ='https://developerfunnel.herokuapp.com/hotels?city='
-class Viewbooking extends Component {
-    constructor(){
-        super()
-        this.state={
-            booking:'',
-            Hname:'',
-            seleHotel:'',
-            filtered:'',
-            date:'',
-            bgcolor:''
-        }
+
+
+const Viewbooking = (props)=> {
+  const [booking,setBooking] = useState('')
+  const [Hname,setHname] = useState('')
+  const [seleHotel,setSeleHotel] = useState('')
+  const [filtered,setFiltered] = useState('')
+  const [date,setDate] = useState('')
+
+  useEffect(()=>{
+    props.dispatch(hoteldata())
+    axios.get(hotelname)
+          .then((res)=>{
+            setHname(res.data)
+      })
+  },[])
+
+  useEffect(()=>{
+    if(props.hoteldata){
+      setBooking(props.hoteldata)
+      setFiltered(props.hoteldata)
     }
-    renderHotelname=(data)=>{
+    
+  },[props.hoteldata])
+
+  const renderHotelname=(data)=>{
       if(data){
         return data.map((item)=>{
           return(
@@ -27,86 +41,80 @@ class Viewbooking extends Component {
       }
     }
 
-    HotelName=(e)=>{
-
-      this.setState({seleHotel:e.target.value})
-      
-      const output = this.state.booking.filter((data)=>{
+   const HotelName=(e)=>{
+    setSeleHotel(e.target.value) 
+      const output = booking.filter((data)=>{
         return ((data.hotelName) === 
         (e.target.value))
         })
-        this.setState({filtered:output})
-            
+        setFiltered(output)      
         }
    
-    selectedDate=(e)=>{
-      this.setState({date:e.target.value})
-
-      const output = this.state.booking.filter((data)=>{
-        return ((data.date) === 
-        (e.target.value))
+   const selectedDate=(e)=>{
+      setDate(e.target.value)
+      const output = booking.filter((data)=>{
+        return ((data.date) === (e.target.value))
         })
-        this.setState({filtered:output})
+        setFiltered(output)
     }
 
-    sort=()=>{
-      if(this.state.booking){
-        this.state.booking.sort((a, b) => new Date(a.date)- new Date(b.date)) 
+    console.log(props.hoteldata)
+   const sort=()=>{
+      if(booking){
+        booking.sort((a, b) => new Date(a.date)- new Date(b.date)) 
     }
+    }
+
+   const statusUpdate=async(id,status)=>{
+     await props.dispatch(statusChange(id,status))
+     await props.dispatch(hoteldata())
   }
 
-  render() {
     if (!sessionStorage.getItem('token')){
-      this.props.history.push('/login')
+      props.history.push('/login')
     }
-    if (sessionStorage.getItem('token') && sessionStorage.getItem("_role") !== 'Admin'){
-      this.props.history.push('/login?message=You Are Not Admin')
+    if (sessionStorage.getItem('token') && sessionStorage.getItem("__role") !== 'Admin'){
+      props.history.push('/login?message=You Are Not Admin')
     }
     return (
-      <div>
+      <div style={{marginTop:'10px'}}>
       
       <div className='container'>
-        <select onClick={this.HotelName} style={{padding:'8px'}}>
+      <p className='filterdata'>Filter By:</p>
+        <div className='filterdata'>
+        <select onClick={HotelName} style={{padding:'5px'}}>
           
           <option>------SELECT HOTEL------</option>
-          {this.renderHotelname(this.state.Hname)}
+          {renderHotelname(Hname)}
 
         </select> &nbsp;
-        <input  style={{padding:'5px',float:'right'}} type='date' onChange={this.selectedDate} value={this.state.date}></input>
+        <input  style={{padding:'3px'}} type='date' onChange={selectedDate} value={date}></input>
+        </div>
         <div>
           <center style={{color:'blue'}}><h1>BOOKINGS</h1></center>
-        <Displaybooking bookinglist={this.state.filtered}/>
+        <Displaybooking bookinglist={filtered} statusUpdate={statusUpdate}/>
         </div>
-        {this.sort()}
+        {sort}
       </div>
       </div>
     )
-    }
-  componentDidMount(){
-      axios.get(url)
-      .then((res)=>{
-        this.setState({booking:res.data,filtered:res.data})
-      })
-      
-      fetch((userinfo),{
-        method:'GET',
-        headers:{
-          'x-access-token':sessionStorage.getItem('token')
-        }
-      })
-      .then((res)=>res.json())
-      .then((data)=>{
-        sessionStorage.setItem('_role',data.role)
-        localStorage.setItem('username',data.name)
-      })
-
-        axios.get(hotelname)
-        .then((res)=>{
-        this.setState({Hname:res.data})
-    })
     
-  }
+  // componentDidMount(){
+      
+
+  //       axios.get(hotelname)
+  //       .then((res)=>{
+  //       Hname:res.data})
+  //   })
+    
+  // }
   
 }
 
-export default Viewbooking
+function mapStateToProps(state){
+  return{
+    hoteldata:state.logindata.Hdata
+  }
+}
+
+export default connect(mapStateToProps)(Viewbooking)

@@ -1,10 +1,17 @@
+/* .mainsection{
+    background-color: rgba(0, 0, 0, 0.37);
+    padding: 2%;
+    margin-top: 0;
+} */
+
 .imageContainer{
     background: url('https://i.ibb.co/Cv6Y9NL/bg.jpg');
+    
     border-style: solid ;
     border-color: white;
     background-repeat: no-repeat;
     background-size: cover;
-    margin:0 8%;
+    /* margin:0 8%; */
 }
 body{
     margin: auto;

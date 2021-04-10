@@ -5,7 +5,15 @@ var UserSchema = new mongoose.Schema({
     name: String,
     phone: String,
     status: String,
-    date:String
+    date:String,
+    accept:{
+        type:String,
+        default:'Accept'
+    },
+    reject:{
+        type:String,
+        default:'Reject'
+    }
 })
 
 mongoose.model('hotelbookings',UserSchema)

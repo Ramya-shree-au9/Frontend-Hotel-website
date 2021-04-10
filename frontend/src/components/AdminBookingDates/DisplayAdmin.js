@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
-import {Link} from 'react-router-dom'
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 
-const url = 'http://localhost:5000/api/auth/bookingstatus'
+// const url = 'http://localhost:5000/api/auth/bookingstatus'
 class Displaybooking extends Component{
     constructor(props){
         super(props)
@@ -12,36 +11,38 @@ class Displaybooking extends Component{
     }
 
     AcceptDetail=(e)=>{
-        e.target.innerText = 'Accepted'
-        console.log(e.target.value)
-        fetch(`${url}/${e.target.value}`,{
-            method:'PATCH',
-            headers:{
-                'Accept':'application/json',
-                'Content-Type':'application/json'    
-                },
-            body:JSON.stringify({
-                status:'ACCEPTED'
-            })
-        })
-        .then(response => response.json())
-        .then(json => console.log(json))
+        this.props.statusUpdate(e.target.value,'Accepted')
+        // e.target.innerText = 'Accepted'
+        // console.log(e.target.value)
+        // fetch(`${url}/${e.target.value}`,{
+        //     method:'PATCH',
+        //     headers:{
+        //         'Accept':'application/json',
+        //         'Content-Type':'application/json'    
+        //         },
+        //     body:JSON.stringify({
+        //         status:'Accepted'
+        //     })
+        // })
+        // .then(response => response.json())
+        // .then(json => console.log(json))
     }
 
     rejectItem=(e)=>{
-        e.target.innerText = 'Rejected'
-        fetch(`${url}/${e.target.value}`,{
-            method:'PATCH',
-            headers:{
-                'Accept':'application/json',
-                'Content-Type':'application/json'    
-                },
-            body:JSON.stringify({
-                status:'REJECTED'
-            })
-        })
-        .then(response => response.json())
-        .then(json => console.log(json))
+        this.props.statusUpdate(e.target.value,'Rejected')
+        // e.target.innerText = 'Rejected'
+        // fetch(`${url}/${e.target.value}`,{
+        //     method:'PATCH',
+        //     headers:{
+        //         'Accept':'application/json',
+        //         'Content-Type':'application/json'    
+        //         },
+        //     body:JSON.stringify({
+        //         status:'Rejected'
+        //     })
+        // })
+        // .then(response => response.json())
+        // .then(json => console.log(json))
     }
    
     bookingDisplay=()=>{
@@ -57,8 +58,8 @@ class Displaybooking extends Component{
                             <td>{item.phone}</td>
                             <td>{item.hotelName}</td>
                             <td>{item.date}</td>
-                            <td><button className='btn btn-success' value={item._id} onClick={this.AcceptDetail}>Accept</button>&nbsp;
-                            <button value={item._id} onClick={this.rejectItem} className='btn btn-danger'>Reject</button></td>
+                            <td><button className='btn btn-success' value={item._id} onClick={this.AcceptDetail}>{item.accept}</button>&nbsp;
+                            <button value={item._id} onClick={this.rejectItem} className='btn btn-danger'>{item.reject}</button></td>
                         </tr>
                     </tbody>
               
@@ -77,7 +78,7 @@ class Displaybooking extends Component{
         {
             if(this.props.bookinglist.length > 0){
          return this.props.bookinglist.map((item)=>{
-            if(item.date > '2020-12-27'){
+            if(item.date > '2021-04-06'){
                
                 return(
                     <tbody>
@@ -87,8 +88,8 @@ class Displaybooking extends Component{
                             <td>{item.phone}</td>
                             <td>{item.hotelName}</td>
                             <td>{item.date}</td>
-                            <td><button className='btn btn-success' value={item._id} onClick={this.AcceptDetail}>Accept</button>
-                            &nbsp;<button value={item._id} onClick={this.rejectItem} className='btn btn-danger'>Reject</button></td>
+                            <td><button className='btn btn-success' value={item._id} onClick={this.AcceptDetail}>{item.accept}</button>
+                            &nbsp;<button value={item._id} onClick={this.rejectItem} className='btn btn-danger'>{item.reject}</button></td>
                         </tr>
                     </tbody>
             )
@@ -121,8 +122,8 @@ class Displaybooking extends Component{
                             <td>{item.phone}</td>
                             <td>{item.hotelName}</td>
                             <td>{item.date}</td>                            
-                            <td><button className='btn btn-success' value={item._id} onClick={this.AcceptDetail}>Accept</button>
-                            &nbsp;<button value={item._id} onClick={this.rejectItem} className='btn btn-danger'>Reject</button></td>
+                            <td><button className='btn btn-success' value={item._id} onClick={this.AcceptDetail}>{item.accept}</button>
+                            &nbsp;<button value={item._id} onClick={this.rejectItem} className='btn btn-danger'>{item.reject}</button></td>
                         </tr>
                     </tbody>
             )}
@@ -137,10 +138,6 @@ class Displaybooking extends Component{
      }
     }
    
-    Logoutfun=()=>{
-        sessionStorage.clear()
-        
-    }
     render(){
         return (
             <div>
@@ -208,7 +205,7 @@ class Displaybooking extends Component{
             </Tabs>  
                  
                   
-                  <Link className='btn btn-danger' onClick={this.Logoutfun}>Log out</Link>
+                 
                   </div>
                   
             </div>

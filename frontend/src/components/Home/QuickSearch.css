@@ -26,27 +26,27 @@
     box-shadow: 0 3px 6px black;
     margin-right: 30px;
     margin-bottom: 30px;
-    width:400px;
-    height: 150px;
+    width:500px;
+    height: 180px;
     background-color: white;
-    display: inline-block;
-   
-    
+    display: inline-block;    
 }
 
 .tileComponent1{
     width:50%;
     float: left;
+    margin-top: 3%;
 }
 
 .tileComponent1>img{
     height:150px;
-    width:160px
+    width:160px;
+    border-radius: 4%;
 }
 .tileComponent2{
     width:50%;
     float: left;
-    margin-top: 20px;
+    margin-top: 60px;
 }
 
 

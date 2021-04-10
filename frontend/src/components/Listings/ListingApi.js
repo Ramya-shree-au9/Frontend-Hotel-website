@@ -25,25 +25,28 @@ class listingapi extends Component {
       }
     }
   render() {
-      console.log(this.state.hoteldata)
     return (
       <div className='container'>
-        
+        {this.state.hoteldata?
         <div className="row">
-          <center><h2  id='head'>Hotel details</h2></center>
+          {/* <center><h2  id='head'>Hotel details</h2></center> */}
             <div className="col-md-2">
                 <Roomfilter filterdata={(data)=>{this.sortedData(data)}}/>
                 <Costfilter filtercost={(data)=>{this.sortedcost(data)}}/>
             </div>
-            <div className="col-md-10" >
-           
+            <div className="col-md-10" > 
             <ListingDisplay listdata={this.state.hoteldata}/>
           </div>
-      </div>
+      </div>:
+      <div className='loader'><img src='https://miro.medium.com/max/882/1*9EBHIOzhE1XfMYoKz1JcsQ.gif' alt=''/></div>}
       </div>
     )
   }
   componentDidMount(){
+    window.scrollTo({
+      Top:'0',
+      behavior:'smooth'
+    })
     var tripid = this.props.match.params.id;
     sessionStorage.setItem("tripid",tripid)
         axios.get(`${url}/${tripid}`)

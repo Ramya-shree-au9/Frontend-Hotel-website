@@ -35,18 +35,12 @@ class Displaybooking extends Component{
     }
         
     }
-    
-   
-    Logoutfun=()=>{
-        sessionStorage.clear()
-        
-    }
+
     render(){
-        // console.log('fil',this.state.filtered)
         return (
             <div>
                  <div className="container">
-                  <table className="table table-responsive">
+                  <table className="table table-responsive" style={{border:'.02px solid black'}}>
                           <thead style={{color:'#FFE000',backgroundColor:'red'}}>
                               <tr>
                                   <th>Id</th>
@@ -59,10 +53,10 @@ class Displaybooking extends Component{
                               </tr>
                           </thead>
 
-                          {/* {this.filterhotel(this.props.bookinglistbyname)} */}
+                         
                           {this.bookingDisplay()}
                   </table>
-                  <Link className='btn btn-danger' onClick={this.Logoutfun}>Log out</Link>
+               
                   </div>
                   
             </div>

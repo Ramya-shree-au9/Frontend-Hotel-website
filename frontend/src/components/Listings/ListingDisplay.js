@@ -4,7 +4,6 @@ import {Link} from 'react-router-dom'
 
 
 const listingDisplay=(props)=>{
-    console.log(props.listdata)
     const Hoteldetails = ({listdata})=>{
         if(listdata.length>0){
             return listdata.map((item)=>{
@@ -23,8 +22,11 @@ const listingDisplay=(props)=>{
                             <p><span class='sidehead'>Room-type:</span>{item.type[0].name},{item.type[1].name},{item.type[2].name}</p>
                             <p><span class='sidehead'>Cost for night:</span>Rs. {item.cost}</p>
                         </div>
+                        <hr/>
                         </>
+                       
                         </Link>
+                        <hr/>
                     </div>
                    
                 )
